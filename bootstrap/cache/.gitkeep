@@ -1,0 +1,10 @@
+# Bootstrap cache (generated at runtime)
+/bootstrap/cache/*.php
+
+# Storage (runtime generated)
+/storage/app/*
+/storage/framework/*
+/storage/logs/*
+!/storage/app/.gitkeep
+!/storage/framework/.gitkeep
+!/storage/logs/.gitkeep

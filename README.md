@@ -12,11 +12,15 @@
 - **System Announcements** — CRUD for global announcements displayed on the employee dashboard
 - **Global Feature Flags** — key/value config table for feature toggles consumed by the frontend
 
+## Why This Tech Stack
+
+PHP and Laravel are the dominant stack in e-commerce — Shopify’s ecosystem, WooCommerce, and a large share of enterprise mall systems are built on PHP. Laravel 13 is the framework of choice because it ships with everything an e-commerce backend needs out of the box: Eloquent ORM, Artisan command scheduler, Queues, and a migration system. Using PHP here also demonstrates polyglot backend capability across a single project.
+
 ## Tech Stack
 
 | Layer | Technology |
 |-------|------------|
-| Framework | PHP 8.2, Laravel 11 |
+| Framework | PHP 8.5, Laravel 13 |
 | ORM | Eloquent ORM |
 | Database | PostgreSQL 15 |
 | Migration | Laravel Migrations |
