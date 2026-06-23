@@ -35,7 +35,7 @@ composer install
 cp .env.example .env
 php artisan key:generate
 php artisan migrate --seed
-php artisan serve
+php artisan serve --port=8081
 # API: http://localhost:8081
 ```
 
