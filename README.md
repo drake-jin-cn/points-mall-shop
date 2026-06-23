@@ -28,6 +28,13 @@ PHP and Laravel are the dominant stack in e-commerce — Shopify’s ecosystem, 
 | Auth | JWT middleware (validates BFF-issued tokens) |
 | Docs | L5-Swagger (OpenAPI) |
 
+## Docker
+
+```bash
+docker build -t points-mall-shop .
+docker run --env-file .env -p 8081:8081 points-mall-shop
+```
+
 ## Local Development
 
 ```bash
@@ -50,6 +57,15 @@ DB_USERNAME=postgres
 DB_PASSWORD=your-password
 BFF_INTERNAL_SECRET=shared-hmac-secret
 ```
+
+## Code Quality
+
+```bash
+./vendor/bin/pint --test  # Check formatting (Laravel Pint)
+./vendor/bin/pint         # Auto-fix formatting
+```
+
+Formatting runs automatically on staged `.php` files via the pre-commit hook. CI runs on every PR via `.github/workflows/ci.yml` in this repository.
 
 ## Database Ownership
 
