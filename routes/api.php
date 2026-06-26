@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\JwtAuthMiddleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,4 @@ Route::get('/health', function () {
         'db'        => $dbStatus,
         'uptime'    => (int) round(microtime(true) - LARAVEL_START),
     ]);
-});
+})->withoutMiddleware(JwtAuthMiddleware::class);

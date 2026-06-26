@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\JwtAuthMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,7 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'auth.jwt' => JwtAuthMiddleware::class,
+        ]);
+        $middleware->appendToGroup('api', JwtAuthMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
