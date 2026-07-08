@@ -4,7 +4,6 @@ namespace Tests\Unit\Middleware;
 
 use App\Http\Middleware\JwtAuthMiddleware;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\TestCase;
@@ -25,11 +24,11 @@ class JwtAuthMiddlewareTest extends TestCase
     private function makeToken(array $payload = []): string
     {
         $base = [
-            'sub'   => 1,
+            'sub' => 1,
             'email' => 'admin@pointsmall.com',
             'roles' => ['admin'],
-            'iat'   => time(),
-            'exp'   => time() + 900,
+            'iat' => time(),
+            'exp' => time() + 900,
         ];
         return JWT::encode(array_merge($base, $payload), $this->secret, 'HS256');
     }
@@ -46,7 +45,7 @@ class JwtAuthMiddlewareTest extends TestCase
     // AC-01: valid token passes through, next() called
     public function test_valid_bearer_token_passes_through(): void
     {
-        $token   = $this->makeToken();
+        $token = $this->makeToken();
         $request = $this->makeRequest('GET', '/api/products', "Bearer {$token}");
 
         $nextCalled = false;
@@ -64,7 +63,7 @@ class JwtAuthMiddlewareTest extends TestCase
     // AC-01: decoded payload attached to request attributes
     public function test_valid_token_attaches_payload_to_request(): void
     {
-        $token   = $this->makeToken(['sub' => 42, 'email' => 'alice@test.com']);
+        $token = $this->makeToken(['sub' => 42, 'email' => 'alice@test.com']);
         $request = $this->makeRequest('GET', '/api/products', "Bearer {$token}");
 
         $capturedPayload = null;
@@ -83,8 +82,8 @@ class JwtAuthMiddlewareTest extends TestCase
     // AC-02: missing Authorization header → 401 shop-4001
     public function test_missing_authorization_header_returns_401(): void
     {
-        $request  = $this->makeRequest('GET', '/api/products');
-        $next     = fn ($req) => new JsonResponse([]);
+        $request = $this->makeRequest('GET', '/api/products');
+        $next = fn ($req) => new JsonResponse([]);
 
         $response = $this->middleware->handle($request, $next);
 
@@ -98,7 +97,7 @@ class JwtAuthMiddlewareTest extends TestCase
     // AC-03: tampered/invalid token → 401
     public function test_invalid_token_returns_401(): void
     {
-        $request  = $this->makeRequest('GET', '/api/products', 'Bearer not.a.valid.jwt');
+        $request = $this->makeRequest('GET', '/api/products', 'Bearer not.a.valid.jwt');
         $response = $this->middleware->handle($request, fn ($r) => new JsonResponse([]));
 
         $this->assertEquals(401, $response->getStatusCode());
@@ -110,8 +109,8 @@ class JwtAuthMiddlewareTest extends TestCase
     public function test_expired_token_returns_401(): void
     {
         $expiredToken = $this->makeToken(['exp' => time() - 100]);
-        $request      = $this->makeRequest('GET', '/api/products', "Bearer {$expiredToken}");
-        $response     = $this->middleware->handle($request, fn ($r) => new JsonResponse([]));
+        $request = $this->makeRequest('GET', '/api/products', "Bearer {$expiredToken}");
+        $response = $this->middleware->handle($request, fn ($r) => new JsonResponse([]));
 
         $this->assertEquals(401, $response->getStatusCode());
         $body = json_decode($response->getContent(), true);
@@ -121,12 +120,12 @@ class JwtAuthMiddlewareTest extends TestCase
     // AC-05: wrong secret → 401
     public function test_token_signed_with_wrong_secret_returns_401(): void
     {
-        $token    = JWT::encode(
+        $token = JWT::encode(
             ['sub' => 1, 'email' => 'a@b.com', 'roles' => ['admin'], 'exp' => time() + 900],
             'wrong-secret-that-is-long-enough-here',
             'HS256',
         );
-        $request  = $this->makeRequest('GET', '/api/products', "Bearer {$token}");
+        $request = $this->makeRequest('GET', '/api/products', "Bearer {$token}");
         $response = $this->middleware->handle($request, fn ($r) => new JsonResponse([]));
 
         $this->assertEquals(401, $response->getStatusCode());

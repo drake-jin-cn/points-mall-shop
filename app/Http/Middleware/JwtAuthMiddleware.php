@@ -14,7 +14,7 @@ class JwtAuthMiddleware
     {
         $token = $request->bearerToken();
 
-        if (!$token) {
+        if (! $token) {
             return new JsonResponse([
                 'code' => 'shop-4001',
                 'message' => 'Unauthorized',

@@ -8,7 +8,7 @@ Route::get('/health', function () {
     $dbStatus = 'ok';
     try {
         DB::select('SELECT 1');
-    } catch (\Throwable $e) {
+    } catch (Throwable $e) {
         $dbStatus = 'error';
     }
 
