@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('employee_id');
             $table->unsignedInteger('total_points')->default(0);
             $table->enum('status', ['pending', 'paid', 'shipped', 'completed', 'cancelled'])
-                  ->default('pending');
+                ->default('pending');
             $table->timestamps();
 
             $table->index('employee_id');

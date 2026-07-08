@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# pre-commit hook — runs Laravel Pint on staged PHP files.
+# Installed automatically by: composer install (via post-install-cmd).
+
+STAGED_PHP=$(git diff --cached --name-only --diff-filter=ACMR | grep '\.php$')
+
+if [ -z "$STAGED_PHP" ]; then
+  exit 0
+fi
+
+echo "pint: formatting staged PHP files..."
+echo "$STAGED_PHP" | xargs ./vendor/bin/pint
+
+echo "$STAGED_PHP" | xargs git add

@@ -30,6 +30,7 @@ class JwtAuthMiddlewareTest extends TestCase
             'iat' => time(),
             'exp' => time() + 900,
         ];
+
         return JWT::encode(array_merge($base, $payload), $this->secret, 'HS256');
     }
 
@@ -39,6 +40,7 @@ class JwtAuthMiddlewareTest extends TestCase
         if ($authHeader !== null) {
             $request->headers->set('Authorization', $authHeader);
         }
+
         return $request;
     }
 
@@ -51,6 +53,7 @@ class JwtAuthMiddlewareTest extends TestCase
         $nextCalled = false;
         $next = function ($req) use (&$nextCalled) {
             $nextCalled = true;
+
             return new JsonResponse(['ok' => true]);
         };
 
@@ -69,6 +72,7 @@ class JwtAuthMiddlewareTest extends TestCase
         $capturedPayload = null;
         $next = function ($req) use (&$capturedPayload) {
             $capturedPayload = $req->attributes->get('auth_user');
+
             return new JsonResponse([]);
         };
 
