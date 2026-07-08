@@ -16,9 +16,9 @@ class JwtAuthMiddleware
 
         if (!$token) {
             return new JsonResponse([
-                'code'    => 'shop-4001',
+                'code' => 'shop-4001',
                 'message' => 'Unauthorized',
-                'data'    => null,
+                'data' => null,
             ], 401);
         }
 
@@ -28,9 +28,9 @@ class JwtAuthMiddleware
             $request->attributes->set('auth_user', $payload);
         } catch (\Exception $e) {
             return new JsonResponse([
-                'code'    => 'shop-4001',
+                'code' => 'shop-4001',
                 'message' => 'Unauthorized',
-                'data'    => null,
+                'data' => null,
             ], 401);
         }
 

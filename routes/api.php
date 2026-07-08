@@ -13,10 +13,10 @@ Route::get('/health', function () {
     }
 
     return response()->json([
-        'status'    => 'ok',
-        'service'   => 'points-mall-shop',
+        'status' => 'ok',
+        'service' => 'points-mall-shop',
         'timestamp' => now()->utc()->toISOString(),
-        'db'        => $dbStatus,
-        'uptime'    => (int) round(microtime(true) - LARAVEL_START),
+        'db' => $dbStatus,
+        'uptime' => (int) round(microtime(true) - LARAVEL_START),
     ]);
 })->withoutMiddleware(JwtAuthMiddleware::class);
