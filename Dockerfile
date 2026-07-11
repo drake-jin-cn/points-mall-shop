@@ -13,7 +13,8 @@ COPY . .
 
 RUN composer dump-autoload --optimize \
     && chmod -R 775 storage bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod +x docker-entrypoint.sh
 
 EXPOSE 8081
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-8081}"]
+CMD ["./docker-entrypoint.sh"]
