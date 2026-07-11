@@ -7,10 +7,26 @@
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
         </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>
             <directory>app</directory>
         </include>
     </source>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="DB_CONNECTION" value="pgsql"/>
+        <env name="DB_URL" value=""/>
+        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_PORT" value="5432"/>
+        <env name="DB_DATABASE" value="points_shop_test"/>
+        <env name="DB_USERNAME" value="postgres"/>
+        <env name="DB_PASSWORD" value=""/>
+        <env name="INTERNAL_API_KEY" value="test-internal-key-for-tests"/>
+        <env name="JWT_SECRET" value="test-jwt-secret-change-me-please"/>
+    </php>
 </phpunit>
+
